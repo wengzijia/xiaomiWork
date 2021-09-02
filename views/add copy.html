@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_2728781_skf6ddw88j.css">
+    <title>Document</title>
+    <style>
+        #upload {
+            width: 150px;
+            height: 38px;
+            background-color:royalblue;
+            color:gold;
+            font-size: 22px;
+            outline: 0;
+            border: 0;
+            margin-left: 20px;
+        }
+        #upload i {
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>添加文章</h1>
+    <form action="/insert" method="POST" enctype="multipart/form-data">
+        <p>
+            标题：<input type="text" name="title" autocomplete="off">
+        </p>
+        <p>
+            封面 <input type="file" name="img" id="img" style="display: none;" autocomplete="off">
+            <button id="upload"> <i class="iconfont icon-shangchuanwenjianjia"></i>上传图片</button>
+        </p>
+        <p id='imgWrap' style="display: none;">
+            封面预览：
+            <img src="" width="180px" id="preview">
+        </p>
+        <p>
+            作者：<input type="text" name="author" autocomplete="off">
+        </p>
+
+        <p>
+            审核：
+            <input type="radio" name="status" value='0' checked> 待审核
+            <input type="radio" name="status" value='1'> 审核通过
+            <input type="radio" name="status" value='2'> 审核失败
+        </p>
+        <p>
+            所属分类：
+            <select name="cat_id">
+                <option>请选择</option>
+                {{each cats item index}}
+                <option value="{{item.id}}">{{item.name}}</option>
+                {{/each}}
+            </select>
+        </p>
+        <p>
+            内容：
+            <textarea name="content" cols="30" rows="10"></textarea>
+        </p>
+        <p>
+            <button>添加</button>
+        </p>
+    </form>
+</body>
+<script>
+    //上传文件
+    let Upload = document.getElementById('upload');
+    let imgEle = document.getElementById('img');
+    Upload.onclick = function(event){
+        imgEle.click()
+        event.preventDefault();  // 阻止默认行为
+        // return false
+    }
+    imgEle.onchange = function () {
+        let file = this.files[0];
+
+        //判断有没有上传文件，没有上传则退出
+        if (!file) {
+            return;
+        }
+        let fileReader = new FileReader();
+        fileReader.readAsDataURL(file)
+        fileReader.onload = function (e) {
+            // console.log(this.result) // base 64
+            document.getElementById('preview').src = this.result;
+            document.getElementById('imgWrap').style.display = '';
+        }
+    }
+</script>
+
+</html>

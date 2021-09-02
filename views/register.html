@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="http://at.alicdn.com/t/font_2728781_rn2sjkg1e2.css">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      background-color: #e0e0e0;
+      overflow: hidden;
+      font-size: 12px;
+    }
+
+    .inspiration {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      font-family: 'Gill Sans', sans-serif;
+      font-size: 12px;
+      color: #969696;
+    }
+
+    .inspiration img {
+      width: 60px;
+    }
+
+    .center {
+      position: relative;
+      top: 50%;
+      left: 50%;
+      display: inline-block;
+      width: 275px;
+      height: 580px;
+      border-radius: 3px;
+      transform: translate(-50%, -50%);
+      overflow: hidden;
+      background-image: linear-gradient(to top right, #f9a743, #f9db5f);
+    }
+
+    @media screen and (max-height: 500px) {
+      .center {
+        transition: transform 0.5s;
+        transform: translate(-50%, -50%) scale(0.8);
+      }
+    }
+
+    .center .ear {
+      position: absolute;
+      top: -110px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background-color: #243946;
+    }
+
+    .center .ear.ear--left {
+      left: -135px;
+    }
+
+    .center .ear.ear--right {
+      right: -135px;
+    }
+
+    .center .face {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 200px;
+      height: 150px;
+      margin: 80px auto 10px;
+      --rotate-head: 0deg;
+      transform: rotate(var(--rotate-head));
+      transition: transform 0.2s;
+      transform-origin: center 20px;
+    }
+
+    .center .eye {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background-color: #243946;
+    }
+
+    .center .eye.eye--left {
+      margin-right: 40px;
+    }
+
+    .center .eye.eye--right {
+      margin-left: 40px;
+    }
+
+    .center .eye .glow {
+      position: relative;
+      top: 3px;
+      right: -12px;
+      width: 12px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #fff;
+      transform: rotate(38deg);
+    }
+
+    .center .nose {
+      position: relative;
+      top: 30px;
+      transform: scale(1.1);
+    }
+
+    .center .nose .glow {
+      position: absolute;
+      top: 3px;
+      left: 32%;
+      width: 15px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #476375;
+    }
+
+    .center .mouth {
+      position: relative;
+      margin-top: 45px;
+    }
+
+    .center svg.smile {
+      position: absolute;
+      left: -28px;
+      top: -19px;
+      transform: scaleX(1.1);
+      stroke: #243946;
+    }
+
+    .center .mouth-hole {
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 60px;
+      height: 15px;
+      border-radius: 50%/100% 100% 0% 0;
+      transform: rotate(180deg);
+      background-color: #243946;
+      z-index: -1;
+    }
+
+    .center .tongue {
+      position: relative;
+      top: 5px;
+      width: 30px;
+      height: 20px;
+      background-color: #ffd7dd;
+      transform-origin: top;
+      transform: rotateX(60deg);
+    }
+
+    .center .tongue.breath {
+      -webkit-animation: breath 0.3s infinite linear;
+      animation: breath 0.3s infinite linear;
+    }
+
+    .center .tongue-top {
+      position: absolute;
+      bottom: -15px;
+      width: 30px;
+      height: 30px;
+      border-radius: 15px;
+      background-color: #ffd7dd;
+    }
+
+    .center .line {
+      position: absolute;
+      top: 0;
+      width: 30px;
+      height: 5px;
+      background-color: #fcb7bf;
+    }
+
+    .center .median {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 25px;
+      border-radius: 5px;
+      background-color: #fcb7bf;
+    }
+
+    .center .hands {
+      position: relative;
+    }
+
+    .center .hands .hand {
+      position: absolute;
+      top: -6px;
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      z-index: 1;
+    }
+
+    .center .hands .hand--left {
+      left: 50px;
+    }
+
+    .center .hands .hand--left.hide {
+      transform: translate(2px, -155px) rotate(-160deg);
+    }
+
+    .center .hands .hand--left.peek {
+      transform: translate(0px, -120px) rotate(-160deg);
+    }
+
+    .center .hands .hand--right {
+      left: 170px;
+    }
+
+    .center .hands .hand--right.hide {
+      transform: translate(-6px, -155px) rotate(160deg);
+    }
+
+    .center .hands .hand--right.peek {
+      transform: translate(-4px, -120px) rotate(160deg);
+    }
+
+    .center .hands .finger {
+      position: relative;
+      z-index: 0;
+    }
+
+    .center .hands .finger .bone {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #243946;
+      border-bottom: none;
+      border-top: none;
+      background-color: #fac555;
+    }
+
+    .center .hands .finger .nail {
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 20px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid #243946;
+      background-color: #fac555;
+      z-index: -1;
+    }
+
+    .center .hands .finger:nth-child(1),
+    .center .hands .finger:nth-child(3) {
+      left: 4px;
+      z-index: 1;
+    }
+
+    .center .hands .finger:nth-child(1) .bone,
+    .center .hands .finger:nth-child(3) .bone {
+      height: 10px;
+    }
+
+    .center .hands .finger:nth-child(3) {
+      left: -4px;
+    }
+
+    .center .hands .finger:nth-child(2) {
+      top: -5px;
+      z-index: 2;
+    }
+
+    .center .hands .finger:nth-child(1) .nail,
+    .center .hands .finger:nth-child(3) .nail {
+      top: 0px;
+    }
+
+    .center .login {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .center .login label {
+      position: relative;
+      padding: 0 20px;
+    }
+
+    .center .login label .fa {
+      position: absolute;
+      top: 40%;
+      left: 35px;
+      color: #bbb;
+    }
+
+    .center .login label .fa:before {
+      position: relative;
+      left: 1px;
+    }
+
+    .center .login input,
+    .center .login .login-button {
+      width: 100%;
+      height: 35px;
+      border: none;
+      border-radius: 30px;
+    }
+
+    .center .login input {
+      padding: 0 20px 0 40px;
+      margin: 5px 0;
+      box-shadow: none;
+      outline: none;
+    }
+
+    .center .login input::-moz-placeholder {
+      color: #ccc;
+    }
+
+    .center .login input:-ms-input-placeholder {
+      color: #ccc;
+    }
+
+    .center .login input::placeholder {
+      color: #ccc;
+    }
+
+    .center .login input.password {
+      padding: 0 90px 0 40px;
+    }
+
+    .center .login .password-button {
+      position: absolute;
+      top: 9px;
+      right: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 80px;
+      height: 27px;
+      border-radius: 30px;
+      border: none;
+      outline: none;
+      background-color: #243946;
+      color: #fff;
+    }
+
+    .center .login .password-button:active {
+      transform: scale(0.95);
+    }
+
+    .center .login .login-button {
+      width: calc(100% - 40px);
+      margin: 20px 20px 0;
+      outline: none;
+      background-color: #243946;
+      color: #fff;
+      transition: transform 0.1s;
+      text-decoration: none;
+    }
+
+    .center .login .login-button:active {
+      transform: scale(0.95);
+    }
+
+    .center .social-buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 25px;
+    }
+
+    .center .social-buttons .social {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 35px;
+      height: 35px;
+      margin: 0 10px;
+      border-radius: 50%;
+      background-color: #243946;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .center .social-buttons .social:active {
+      transform: scale(0.95);
+    }
+
+    .center .footer {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    @-webkit-keyframes breath {
+
+      0%,
+      100% {
+        transform: rotateX(0deg);
+      }
+
+      50% {
+        transform: rotateX(60deg);
+      }
+    }
+
+    @keyframes breath {
+
+      0%,
+      100% {
+        transform: rotateX(0deg);
+      }
+
+      50% {
+        transform: rotateX(60deg);
+      }
+    }
+
+    .a {
+      font-size: 28px;
+      color: blue;
+      float: left;
+      margin-top: -11px;
+      margin-left: -10px;
+    }
+    svg{
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="center">
+    <div class="ear ear--left"></div>
+    <div class="ear ear--right"></div>
+    <div class="face">
+      <div class="eyes">
+        <div class="eye eye--left">
+          <div class="glow"></div>
+        </div>
+        <div class="eye eye--right">
+          <div class="glow"></div>
+        </div>
+      </div>
+      <div class="nose">
+        <svg width="38.161" height="22.03">
+          <path
+            d="M2.017 10.987Q-.563 7.513.157 4.754C.877 1.994 2.976.135 6.164.093 16.4-.04 22.293-.022 32.048.093c3.501.042 5.48 2.081 6.02 4.661q.54 2.579-2.051 6.233-8.612 10.979-16.664 11.043-8.053.063-17.336-11.043z"
+            fill="#243946"></path>
+        </svg>
+        <div class="glow"></div>
+      </div>
+      <div class="mouth">
+        <svg class="smile" viewBox="-2 -2 84 23" width="84" height="23">
+          <path d="M0 0c3.76 9.279 9.69 18.98 26.712 19.238 17.022.258 10.72.258 28 0S75.959 9.182 79.987.161"
+            fill="none" stroke-width="3" stroke-linecap="square" stroke-miterlimit="3"></path>
+        </svg>
+        <div class="mouth-hole"></div>
+        <div class="tongue breath">
+          <div class="tongue-top"></div>
+          <div class="line"></div>
+          <div class="median"></div>
+        </div>
+      </div>
+    </div>
+    <div class="hands">
+      <div class="hand hand--left">
+        <div class="finger">
+          <div class="bone"></div>
+          <div class="nail"></div>
+        </div>
+        <div class="finger">
+          <div class="bone"></div>
+          <div class="nail"></div>
+        </div>
+        <div class="finger">
+          <div class="bone"></div>
+          <div class="nail"></div>
+        </div>
+      </div>
+      <div class="hand hand--right">
+        <div class="finger">
+          <div class="bone"></div>
+          <div class="nail"></div>
+        </div>
+        <div class="finger">
+          <div class="bone"></div>
+          <div class="nail"></div>
+        </div>
+        <div class="finger">
+          <div class="bone"></div>
+          <div class="nail"></div>
+        </div>
+      </div>
+    </div>
+    <div class="login">
+      <label>
+        <div class="fa fa-phone"><i class="iconfont icon-yonghu1  a"></i></div>
+        <input class="username" id="username" type="text" autocomplete="on" placeholder="请输入用户名" />
+      </label>
+      <label>
+        <div class="fa fa-commenting"><i class="iconfont icon-A a"></i></div>
+        <input class="password" id="password" type="password" autocomplete="off" placeholder="请输入您的密码" />
+        <button class="password-button">显示密码</button>
+      </label>
+      <label>
+        <div class="fa fa-commenting"><i class="iconfont icon-A a"></i></div>
+        <input class="password" id="repassword" type="password" autocomplete="off" placeholder="请再次输入您的密码" />
+        <button class="password-button">显示密码</button>
+      </label>
+      <label>
+        <div class="fa fa-commenting"><i class="iconfont icon-Email a"></i></div>
+        <input class="password" id="email" type="email" autocomplete="off" placeholder="请输入您的邮箱" />
+      </label>
+      <button class="login-button registerBtn" id="loginBtn">注册</button>
+    </div>
+    <div class="social-buttons">
+      <div class="social">
+        <svg t="1628904035187" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4303" width="200" height="200"><path d="M512 1.896C229.452 1.896 0 229.452 0 512s229.452 510.104 512 510.104S1022.104 794.548 1022.104 512 794.548 1.896 512 1.896z m-91.022 629.57c-26.548 0-49.304-5.688-75.852-11.377l-75.852 37.926 22.756-66.37c-54.993-37.926-87.23-87.23-87.23-147.912 0-104.296 98.607-185.837 218.074-185.837 108.089 0 201.007 64.474 219.97 153.6-7.585 0-13.274-1.896-20.859-1.896-104.296 0-185.837 77.748-185.837 172.563 0 15.17 1.896 30.34 7.585 45.511-7.585 3.793-15.17 3.793-22.755 3.793z m322.37 77.749l17.067 54.992-58.785-34.133c-22.756 5.689-43.615 11.378-66.37 11.378-104.297 0-185.838-70.163-185.838-157.393S530.963 424.77 635.26 424.77c98.608 0 185.837 70.163 185.837 159.29 0 47.407-32.237 91.021-77.748 125.155z" fill="#46BB36" p-id="4304"></path><path d="M318.578 379.26c0 17.066 13.274 30.34 30.34 30.34s30.341-13.274 30.341-30.34-13.274-30.341-30.34-30.341-30.341 13.274-30.341 30.34z m235.14 159.288c0 13.274 11.378 24.652 24.652 24.652 13.274 0 24.652-11.378 24.652-24.652 0-13.274-11.378-24.652-24.652-24.652-13.274-1.896-24.651 9.482-24.651 24.652z m-81.54-159.289c0 17.067 13.274 30.341 30.34 30.341 17.067 0 30.341-13.274 30.341-30.34 0-17.067-13.274-30.341-30.34-30.341-17.067 0-30.341 13.274-30.341 30.34zM675.08 538.55c0 13.273 11.378 24.651 24.652 24.651 13.274 0 24.652-11.378 24.652-24.652 0-13.274-11.378-24.652-24.652-24.652-13.274-1.896-24.652 9.482-24.652 24.652z" fill="#46BB36" p-id="4305"></path></svg>
+      </div>
+      <div class="social">
+        <svg t="1628903972762" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4023" width="30" height="200"><path d="M511.037 986.94c-85.502 0-163.986-26.686-214.517-66.544-25.66 7.149-58.486 18.655-79.202 32.921-17.725 12.202-15.516 24.647-12.32 29.67 14.027 22.069 240.622 14.092 306.04 7.219v-3.265z" fill="#FAAD08" p-id="4024"></path><path d="M495.627 986.94c85.501 0 163.986-26.686 214.518-66.544 25.66 7.149 58.485 18.655 79.203 32.921 17.724 12.202 15.512 24.647 12.32 29.67-14.027 22.069-240.623 14.092-306.042 7.219v-3.265z" fill="#FAAD08" p-id="4025"></path><path d="M496.137 472.026c140.73-0.935 253.514-27.502 291.73-37.696 9.11-2.432 13.984-6.789 13.984-6.789 0.032-1.25 0.578-22.348 0.578-33.232 0-183.287-88.695-367.458-306.812-367.47C277.5 26.851 188.8 211.021 188.8 394.31c0 10.884 0.55 31.982 0.583 33.232 0 0 3.965 4.076 11.231 6.048 35.283 9.579 150.19 37.482 294.485 38.437h1.037zM883.501 626.967c-8.66-27.825-20.484-60.273-32.455-91.434 0 0-6.886-0.848-10.366 0.158-107.424 31.152-237.624 51.006-336.845 49.808h-1.026c-98.664 1.186-227.982-18.44-335.044-49.288-4.09-1.176-12.168-0.677-12.168-0.677-11.97 31.16-23.793 63.608-32.453 91.433-41.3 132.679-27.92 187.587-17.731 188.818 21.862 2.638 85.099-99.88 85.099-99.88 0 104.17 94.212 264.125 309.947 265.596a765.877 765.877 0 0 1 5.725 0c215.738-1.471 309.947-161.424 309.947-265.595 0 0 63.236 102.519 85.102 99.88 10.186-1.231 23.566-56.14-17.732-188.819" p-id="4026"></path><path d="M429.208 303.911c-29.76 1.323-55.195-32.113-56.79-74.62-1.618-42.535 21.183-78.087 50.95-79.417 29.732-1.305 55.149 32.116 56.765 74.64 1.629 42.535-21.177 78.08-50.925 79.397m220.448-74.62c-1.593 42.507-27.03 75.941-56.79 74.62-29.746-1.32-52.553-36.862-50.924-79.397 1.614-42.526 27.03-75.948 56.764-74.639 29.77 1.33 52.57 36.881 50.951 79.417" fill="#FFFFFF" p-id="4027"></path><path d="M695.405 359.069c-7.81-18.783-86.466-39.709-183.843-39.709h-1.045c-97.376 0-176.033 20.926-183.842 39.709a6.66 6.66 0 0 0-0.57 2.672c0 1.353 0.418 2.575 1.072 3.612 6.58 10.416 93.924 61.885 183.341 61.885h1.045c89.416 0 176.758-51.466 183.34-61.883a6.775 6.775 0 0 0 1.069-3.622 6.66 6.66 0 0 0-0.567-2.664" fill="#FAAD08" p-id="4028"></path><path d="M464.674 239.335c1.344 16.946-7.87 32-20.55 33.645-12.701 1.647-24.074-10.755-25.426-27.71-1.326-16.954 7.873-32.008 20.534-33.64 12.722-1.652 24.114 10.76 25.442 27.705m77.97 8.464c2.702-4.392 21.149-27.488 59.328-19.078 10.028 2.208 14.667 5.457 15.646 6.737 1.445 1.888 1.84 4.576 0.375 8.196-2.903 7.174-8.894 6.979-12.217 5.575-2.144-0.907-28.736-16.948-53.232 6.99-1.685 1.648-4.7 2.212-7.558 0.258-2.856-1.956-4.038-5.923-2.342-8.678" p-id="4029"></path><path d="M503.821 589.328h-1.031c-67.806 0.802-150.022-8.004-229.638-23.381-6.817 38.68-10.934 87.294-7.399 145.275 8.928 146.543 97.728 238.652 234.793 239.996h5.57c137.065-1.344 225.865-93.453 234.796-239.996 3.535-57.986-0.584-106.6-7.403-145.283-79.631 15.385-161.861 24.196-229.688 23.389" fill="#FFFFFF" p-id="4030"></path><path d="M310.693 581.35v146.633s69.287 13.552 138.7 4.17V596.897c-43.974-2.413-91.4-7.79-138.7-15.546" fill="#EB1C26" p-id="4031"></path><path d="M806.504 427.238s-130.112 43.08-302.66 44.309h-1.025c-172.264-1.224-302.217-44.161-302.66-44.309L156.58 541.321c108.998 34.464 244.093 56.677 346.238 55.387l1.024-0.002c102.152 1.297 237.226-20.917 346.24-55.385l-43.579-114.083z" fill="#EB1C26" p-id="4032"></path></svg>
+      </div>
+      <div class="social">
+        <svg t="1628904056130" class="icon" viewBox="0 0 1029 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4438" width="200" height="200"><path d="M259.3792 385.3312m-170.5984 0a170.5984 170.5984 0 1 0 341.1968 0 170.5984 170.5984 0 1 0-341.1968 0Z" fill="#03F9AD" p-id="4439"></path><path d="M403.968 568.4224m-170.5984 0a170.5984 170.5984 0 1 0 341.1968 0 170.5984 170.5984 0 1 0-341.1968 0Z" fill="#F9F90B" p-id="4440"></path><path d="M631.3984 622.2848m-88.6784 0a88.6784 88.6784 0 1 0 177.3568 0 88.6784 88.6784 0 1 0-177.3568 0Z" fill="#0FF420" p-id="4441"></path><path d="M753.0496 565.248m-88.6784 0a88.6784 88.6784 0 1 0 177.3568 0 88.6784 88.6784 0 1 0-177.3568 0Z" fill="#DA0DF7" p-id="4442"></path><path d="M594.0224 369.3568m-223.0272 0a223.0272 223.0272 0 1 0 446.0544 0 223.0272 223.0272 0 1 0-446.0544 0Z" fill="#FF0000" p-id="4443"></path><path d="M901.12 1024h-778.24c-67.584 0-122.88-55.296-122.88-122.88V122.88c0-67.584 55.296-122.88 122.88-122.88h778.24c67.584 0 122.88 55.296 122.88 122.88v778.24c0 67.584-55.296 122.88-122.88 122.88z" fill="#070103" p-id="4444"></path><path d="M829.44 268.0832c-89.7024-0.1024-162.304-72.8064-162.304-162.4064 0-1.024 0.1024-2.048 0.1024-3.072h-72.4992v-19.456c-0.7168 7.3728-1.1264 14.9504-1.1264 22.528s0.4096 15.0528 1.1264 22.528v576.7168h-1.7408c0 89.7024-72.704 162.4064-162.4064 162.4064s-162.4064-72.704-162.4064-162.4064 72.704-162.4064 162.4064-162.4064c36.7616 0 70.5536 12.1856 97.792 32.768v-85.0944a234.496 234.496 0 0 0-97.792-21.1968c-130.3552 0-235.9296 105.6768-235.9296 235.9296 0 130.3552 105.6768 235.9296 235.9296 235.9296s235.9296-105.6768 235.9296-235.9296c0-0.7168 0-1.4336-0.1024-2.1504h0.1024V276.1728a235.4176 235.4176 0 0 0 162.9184 65.536v-73.6256z" fill="#FFFFFF" p-id="4445"></path></svg>
+      </div>
+    </div>
+    <div class="footer"id="message">随机文本</div>
+  </div><a class="inspiration" href="https://dribbble.com/shots/4485321-Login-Page-Homepage" target="_blank"
+    rel="noopener"><img
+      src="https://cdn.dribbble.com/assets/logo-footer-hd-a05db77841b4b27c0bf23ec1378e97c988190dfe7d26e32e1faea7269f9e001b.png"
+      alt="inspiration" /></a>
+</body>
+<script src="/static/js/jquery.js"></script>
+<script src="/static/plugins/layer/layer.js"></script>
+<script>
+  /*
+Inspired by: "Login Page & Homepage"
+By: Neo
+Link: https://dribbble.com/shots/4485321-Login-Page-Homepage
+*/
+
+  let usernameInput = document.querySelector('.username')
+  let passwordInput = document.querySelector('.password')
+  let showPasswordButton = document.querySelector('.password-button')
+  let face = document.querySelector('.face')
+
+  passwordInput.addEventListener('focus', event => {
+    document.querySelectorAll('.hand').forEach(hand => {
+      hand.classList.add('hide')
+    })
+    document.querySelector('.tongue').classList.remove('breath')
+  })
+
+  passwordInput.addEventListener('blur', event => {
+    document.querySelectorAll('.hand').forEach(hand => {
+      hand.classList.remove('hide')
+      hand.classList.remove('peek')
+    })
+    document.querySelector('.tongue').classList.add('breath')
+  })
+
+  usernameInput.addEventListener('focus', event => {
+    let length = Math.min(usernameInput.value.length - 16, 19)
+    document.querySelectorAll('.hand').forEach(hand => {
+      hand.classList.remove('hide')
+      hand.classList.remove('peek')
+    })
+
+    face.style.setProperty('--rotate-head', `${-length}deg`)
+  })
+
+  usernameInput.addEventListener('blur', event => {
+    face.style.setProperty('--rotate-head', '0deg')
+  })
+
+  // usernameInput.addEventListener('input', _.throttle(event => {
+  //   let length = Math.min(event.target.value.length - 16, 19)
+
+  //   face.style.setProperty('--rotate-head', `${-length}deg`)
+  // }, 100))
+
+  showPasswordButton.addEventListener('click', event => {
+    if (passwordInput.type === 'text') {
+      passwordInput.type = 'password'
+      document.querySelectorAll('.hand').forEach(hand => {
+        hand.classList.remove('peek')
+        hand.classList.add('hide')
+      })
+    } else {
+      passwordInput.type = 'text'
+      document.querySelectorAll('.hand').forEach(hand => {
+        hand.classList.remove('hide')
+        hand.classList.add('peek')
+      })
+    }
+  })
+
+
+  let isValidEmail = false; // 邮箱默认不可用
+    // 失去焦点校验邮箱是否占用
+    $("#email").on('blur',function(){
+       let email = $(this).val();
+       email = encode(email)
+       let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 & xhr.status === 200){
+         
+              let data = JSON.parse(this.responseText);
+              // console.log(this.responseText)
+              let {code,message} = data;
+              layer.msg(message);
+              if(code === 20000){
+                isValidEmail = true;
+                 layer.msg(message)
+              }else{
+                isValidEmail = false;
+                  layer.msg(message)
+              }
+                
+            }
+        }
+        xhr.open('post','/ajaxemail',true)
+        xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        let formData = `email=${email}`;
+        xhr.send(formData)
+    })
+
+    // 注册事件
+    $(".registerBtn").on('click',function(){
+        // 获取表单内的值
+        let username = $("#username").val();
+        let password = $("#password").val();
+        let repassword = $("#repassword").val();
+        let email = $("#email").val();
+        // 2.校验
+        if([username,email,password,repassword].includes('')){
+            layer.msg("参数不能为空")
+            return;
+        }
+        if(!/^\w+@(?:\w+\.)+[a-zA-Z]{2,6}$/.test(email)){
+            layer.msg("邮箱格式非法")
+            return;
+        }
+        if( password !== repassword){
+            layer.msg("浏览器-两次密码不一致")
+            return;
+        }
+
+
+
+        username = encode(username);
+        email = encode(email);
+        password = encode(password);
+        repassword = encode(repassword);
+        // 3. 发送ajax请求
+        if(!isValidEmail){
+            layer.msg('邮箱不可用')
+            return;
+        }
+        $(this).prop('disabled',true).html('注册中...')
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 & xhr.status === 200){
+                $(this).prop('disabled',false).html('注册')
+              let data = JSON.parse(this.responseText);
+              // console.log(this.responseText)
+              let {code,message} = data;
+              layer.msg(message);
+              if(code === 20000){
+                  location.href = "/login"
+              }
+                
+            }
+        }
+        xhr.open('post','/ajaxregister',true)
+        xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        let formData = `username=${username}&password=${password}&repassword=${repassword}&email=${email}`;
+        xhr.send(formData)
+    })
+
+    // 对数据进行编码
+    function encode(value){
+        return encodeURIComponent(value)
+    }
+</script>
+
+</html>

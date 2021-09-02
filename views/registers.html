@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background: url(/static/image/gtr.jpg) no-repeat;
+            background-size: cover;
+        }
+        h1,p{
+            color: gold;
+        }
+        #registerBtn{
+            border: 0;
+            outline: 0;
+            width: 200px;
+            height: 32px;
+            background-color: goldenrod;
+            color: purple;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>注册页面</h1>
+    <!-- ajax不用加name属性 -->
+    <p>
+        用户名: <input type="text" id="username">
+    </p>
+    <p>
+        密码: <input type="password"  id="password">
+    </p>
+    <p>
+        确认密码: <input type="password"  id="repassword">
+    </p>
+    <p>
+        邮箱：<input type="email" id="email">
+    </p>
+    <p>
+        <button id="registerBtn">注册</button>
+    </p>
+</body>
+<script src="/static/js/jquery.js"></script>
+<script src="/static/plugins/layer/layer.js"></script>
+<script>
+    let isValidEmail = false; // 邮箱默认不可用
+    // 失去焦点校验邮箱是否占用
+    $("#email").on('blur',function(){
+       let email = $(this).val();
+       email = encode(email)
+       let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 & xhr.status === 200){
+         
+              let data = JSON.parse(this.responseText);
+              // console.log(this.responseText)
+              let {code,message} = data;
+              layer.msg(message);
+              if(code === 20000){
+                isValidEmail = true;
+                 layer.msg(message)
+              }else{
+                isValidEmail = false;
+                  layer.msg(message)
+              }
+                
+            }
+        }
+        xhr.open('post','/ajaxemail',true)
+        xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        let formData = `email=${email}`;
+        xhr.send(formData)
+    })
+
+    // 注册事件
+    $("#registerBtn").on('click',function(){
+        // 获取表单内的值
+        let username = $("#username").val();
+        let password = $("#password").val();
+        let repassword = $("#repassword").val();
+        let email = $("#email").val();
+        // 2.校验
+        if([username,email,password,repassword].includes('')){
+            layer.msg("参数不能为空")
+            return;
+        }
+        if(!/^\w+@(?:\w+\.)+[a-zA-Z]{2,6}$/.test(email)){
+            layer.msg("邮箱格式非法")
+            return;
+        }
+        if( password !== repassword){
+            layer.msg("浏览器-两次密码不一致")
+            return;
+        }
+
+
+
+        username = encode(username);
+        email = encode(email);
+        password = encode(password);
+        repassword = encode(repassword);
+        // 3. 发送ajax请求
+        if(!isValidEmail){
+            layer.msg('邮箱不可用')
+            return;
+        }
+        $(this).prop('disabled',true).html('注册中...')
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 & xhr.status === 200){
+                $(this).prop('disabled',false).html('注册')
+              let data = JSON.parse(this.responseText);
+              // console.log(this.responseText)
+              let {code,message} = data;
+              layer.msg(message);
+              if(code === 20000){
+                  location.href = "/login"
+              }
+                
+            }
+        }
+        xhr.open('post','/ajaxregister',true)
+        xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        let formData = `username=${username}&password=${password}&repassword=${repassword}&email=${email}`;
+        xhr.send(formData)
+    })
+
+    // 对数据进行编码
+    function encode(value){
+        return encodeURIComponent(value)
+    }
+</script>
+</html>

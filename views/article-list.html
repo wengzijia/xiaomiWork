@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>layout 管理系统大布局 - Layui</title>
+  <link rel="stylesheet" href="/static/layui-v2.6.8/layui/css/layui.css">
+  <style>
+    .c-gray {
+      color: #ccc;
+    }
+
+    .c-green {
+      color: green;
+    }
+
+    .c-red {
+      color: red;
+    }
+
+    .photo {
+      width: 300px;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .photo img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
+    table tr:nth-child(odd){
+      /* background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); */
+      background-image: linear-gradient(to right, rgb(207, 200, 218) , rgb(245, 248, 245));
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layui-layout layui-layout-admin">
+   <!--  引入公共页面 -->
+   {{include "./common/header.html"}}
+
+   <!-- 引入公共页面 -->
+   {{include "./common/side-menu.html"}}
+
+    <div class="layui-body">
+      <!-- 内容主体区域 -->
+      <div style="padding: 15px;">
+        <span class="layui-breadcrumb" lay-separator="/">
+          <a href="/">首页</a>
+          <a href="/article">文章列表</a>
+        </span>
+        <!-- <div class="photo">
+          <button id="updAvatar" 	class="layui-btn layui-btn-primary layui-border-orange">更换头像</button>
+          <input type="file" id="avatarFile" style="display: none;">
+          <img src="{{userInfo.avatar}}" alt="" id="preview">
+        </div> -->
+        <div style="text-align:center;padding:30px;">
+          <button id="addBtn" 	class="layui-btn layui-btn-primary layui-border-blue">添加文章</button>
+          <a href="/recyclelist" class="layui-btn layui-btn-primary layui-border-orange">回收站列表</a>
+          <a href="/addImg" class="layui-btn layui-btn-primary layui-border-green">单文件上传</a>
+          <a href="javascript:;" onclick="logout()" 	class="layui-btn layui-btn-primary layui-border-red">退出</a>
+        </div>
+        <div>
+          <table align="center" width="1300px" border="1px" rules="all" class="layui-table  layui-anim layui-anim-scaleSpring" lay-skin="line">
+            <tr>
+              <td>序号</td>
+              <td width="200px">标题</td>
+              <td>所属分类</td>
+              <td>图片</td>
+              <td>作者</td>
+              <td>内容</td>
+              <td>状态</td>
+              <td>添加时间</td>
+              <!-- <td>修改时间</td> -->
+              <td>操作</td>
+            </tr>
+            {{each article item index}}
+            <tr>
+              <td>{{index + 1}}</td>
+              <td>{{item.title}}</td>
+              <td>{{item.name}}</td>
+              <td><img src="/{{item.img}}" width="50px" height="50px" style="border-radius:50%" alt=""></td>
+              <td>{{item.author}}</td>
+              <td>
+                <a href="/detail?id={{item.id}}">查看详情</a>
+                 <!-- 绑定一个自定义属性，用来记录当前的数据 -->
+                 <button class="layui-btn layui-btn-sm showContent" data-item="{{item}}">查看全文</button>
+              </td>
+              <td>{{@item.status_text}}</td>
+              <td>{{item.addtime | dateFormat 'YYYY-MM-DD'}}</td>
+              <!-- <td>{{item.updatetime | dateFormat 'YYYY-MM-DD'}}</td> -->
+              <td style="width: 200px;text-align: center;">
+                <a href="/edit?id={{item.id}}" class="layui-btn layui-btn-xs">编辑</a> 
+                <a href="javascript:;" onclick="confirmDelete('{{item.id}}','{{item.img}}' );" class="layui-btn layui-btn-sm layui-btn-danger" >永久删除</a>
+                <a href="/recycle?id={{item.id}}" onclick="return confirm('确实加入回收站吗?');" 		class="layui-btn layui-btn-sm">加入回收站</a>
+                <a href="javascript:void(0)" onclick="ajaxDelete(this,'{{item.id}}','{{item.img}}')" 	class="layui-btn layui-btn-sm layui-btn-danger">ajax永久删除</a>
+                <a href="/editContent?id={{item.id}}" 	class="layui-btn layui-btn-sm layui-btn-danger">设置内容</a>
+              </td>
+            </tr>
+            {{/each}}
+          </table>
+        </div>
+      </div>
+    </div>
+
+   {{include "./common/footer.html"}}
+  </div>
+</body>
+<script src="/static/js/jquery.js"></script>
+<script src="/static/layui-v2.6.8/layui/layui.js"></script>
+<script>
+  //JS 
+
+
+
+  // 隔行换色
+  // $("table tr:even").css("background-color", '#5FB878')
+  // $("tr:first").css("background-color", 'gray')
+  $('#addBtn').click(function () {
+    location.href = '/add'
+  })
+
+  // 退出
+  function logout() {
+    if (confirm('确认退出吗')) {
+      location.href = "/logout"
+    }
+  }
+
+  // 普通删除
+  function confirmDelete(id, img) {
+
+    // let result = layer.confirm('确认删除吗', {
+    //     btn: ['是的', '取消'], //按钮
+    //     shadeClose: true,
+    //     shade: [0.3, '#000']
+    // }, () => {
+    //     //点了是的按钮触发
+    //     location.href = "/delete?id=" + id
+    // }, () => {
+    //     layer.msg('你取消')
+    // });
+    // var index = layer.load(1, {
+    //     shade: [0.1, '#fff'] //0.1透明度的白色背景
+    // });
+
+
+    layer.confirm('确认永久删除吗,数据不可还原', {
+      btn: ['是的', '取消'] //按钮
+    }, function () {
+
+      layer.msg('删除成功', { icon: 1 });
+      location.href = "/delete?id=" + id + "&img=" + img
+    }, function () {
+      layer.msg('删除失败', { icon: 2 })
+    });
+  }
+
+  // ajax异步删除
+  function ajaxDelete(ele, id, img) {
+    // 找到他的祖先tr   parent() 找他的父亲
+    // console.log($(ele).parent().parent())  
+
+    layer.confirm('确认删除吗', {
+      btn: ['是的', '取消'], // 按钮
+      shadeClose: true,
+      shade: [0.3, '#000']
+    }, () => {
+      // 点了是的按钮触发
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+          let data = JSON.parse(this.responseText);
+          let { code, message } = data;
+          if (code === 20000) {
+            // 删除成功，删除当前tr行
+            $(ele).parents('tr').remove();
+            //延时器显示删除成功
+            setTimeout(function () {
+              layer.msg('删除成功', { icon: 1 })
+            }, 500)
+            // 疯狂模式,关闭所有层
+            layer.closeAll();
+          } else if (code === 30004) {
+            console.log('code:', code)
+            layer.msg(message)
+            location.href = "/login"
+          } else {
+            layer.msg('删除失败')
+          }
+        }
+      }
+      xhr.open('post', '/ajaxdelete', true)
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+      xhr.send("id=" + id + "&img=" + img + "&flag=ajax")
+    }, () => {
+      layer.msg('否的')
+    });
+  }
+
+ // 查看全文
+ $(".showContent").on('click',function () {
+      // alert(1)
+      let data = JSON.parse( $(this).attr('data-item') )
+      let {title,content,author} = data;
+      // 组装内容
+      let htmlStr = `
+        <div style="padding:10px;">
+          <h2 style='text-align:center'>${title}</h2>
+          <h2 style='text-align:center'>作者： ${author}</h2> 
+          <p>${content}</p>
+        <div>
+      `;
+      layer.open({
+        type: 1,
+        shadeClose: true,
+        area: ['820px', '540px'], //宽高
+        content: htmlStr
+      });
+    })
+</script>
+
+
+</html>

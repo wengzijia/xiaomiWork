@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/layui-v2.6.8/layui/css/layui.css">
+    <title>Document</title>
+    <style>
+        .c-gray {
+            color: #ccc;
+        }
+
+        .c-green {
+            color: green;
+        }
+
+        .c-red {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center;">回收站列表</h1>
+    <div style="text-align:center;padding:30px;">
+        <button id="addBtn">添加文章</button>
+    </div>
+    <div>
+        <table align="center" width="1200px" border="1px" rules="all" class="layui-table">
+            <tr>
+                <td>序号</td>
+                <td>标题</td>
+                <td>所属分类</td>
+                <td>图片</td>
+                <td>作者</td>
+                <td>内容</td>
+                <td>状态</td>
+                <td>添加时间</td>
+                <td>修改时间</td>
+                <td>操作</td>
+            </tr>
+            {{each article item index}}
+            <tr>
+                <td>{{index + 1}}</td>
+                <td>{{item.title}}</td>
+                <td>{{item.name}}</td>
+                <td><img src="{{item.img}}"  width="160px" alt=""></td>
+                <td>{{item.author}}</td>
+                <td><a href="#">查看详情</a></td>
+                <td>{{@item.status_text}}</td>
+                <td>{{item.addtime | dateFormat 'YYYY-MM-DD'}}</td>
+                <td>{{item.updatetime | dateFormat 'YYYY-MM-DD'}}</td>
+                <td>
+                    <a href="javascript:;" onclick="confirmDelete('{{item.id}}');">永久删除</a>
+                    <a href="/restore?id={{item.id}}" onclick="return confirm('确认还原吗?');">还原</a>
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/layer.js"></script>
+<script>
+    $("tr:odd").css("background-color", 'yellow')
+    $("tr:even").css("background-color", 'orange')
+    $("tr:first").css("background-color", 'gray')
+    $('#addBtn').click(function () {
+        location.href = '/add'
+    })
+
+
+    function confirmDelete(id) {
+
+        // let result = layer.confirm('确认删除吗', {
+        //     btn: ['是的', '取消'], //按钮
+        //     shadeClose: true,
+        //     shade: [0.3, '#000']
+        // }, () => {
+        //     //点了是的按钮触发
+        //     location.href = "/delete?id=" + id
+        // }, () => {
+        //     layer.msg('你取消')
+        // });
+        // var index = layer.load(1, {
+        //     shade: [0.1, '#fff'] //0.1透明度的白色背景
+        // });
+
+
+        layer.confirm('确认永久删除吗,数据不可还原', {
+            btn: ['是的', '取消'] //按钮
+        }, function () {
+
+            layer.msg('删除成功', { icon: 1 });
+            location.href = "/delete?id=" + id
+        }, function () {
+            layer.msg('删除失败', { icon:2})
+        });
+
+
+    
+    }
+</script>
+
+</html>

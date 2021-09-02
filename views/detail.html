@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>{{article.title}}</h1>
+    <p>
+        <div>
+            <img src="/{{article.img}}" width="120px" alt="">
+        </div>
+        所属分类：{{article.name}}  ， 发布作者：{{article.author}}  ，发布时间：{{article.addtime | dateFormat}}
+    </p>
+    <p>
+        文章内容: {{@ article.content}}
+    </p>
+</body>
+</html>

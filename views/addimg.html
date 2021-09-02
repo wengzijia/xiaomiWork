@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_2728781_9pm621xlfrb.css">
+    <title>Document</title>
+    <style>
+        h1{
+            color: tomato;
+        }
+        .title,.icon{
+            font-size: 30px;
+            color: blue;
+        }
+        #btn {
+            background-color: rgb(5, 182, 252);
+            outline: 0;
+            border: 0;
+        }
+
+        .file {
+            color: khaki;
+        }
+        #put{
+            margin-top: 12px;
+            width: 200px;
+            height: 28px;
+            color: white;
+            border: 0;
+            border-radius: 10px;
+            background-color: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>文件上传</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <i class="iconfont icon-biaoti title"></i>
+        <input type="text" name="title" placeholder="请输入你的标题"> <br />
+        <i class="iconfont icon-yonghu1 icon"></i>
+        <input type="file" name="photo" id="photo" style="display: none;">
+        <button id="btn"><i class="iconfont icon-shangchuanwenjian1 file">上传文件</i></button>
+        <br />
+        <input type="submit"  value="上传" id="put">
+    </form>
+</body>
+<script>
+    let photoEle = document.getElementById("photo");
+    let btnEle = document.getElementById("btn");
+    btnEle.onclick = function (event) {
+        photoEle.click();
+        event.preventDefault();
+    }
+</script>
+
+</html>

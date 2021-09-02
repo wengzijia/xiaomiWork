@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http:////at.alicdn.com/t/font_2728781_1hj7e86aruj.css">
+    <title>Document</title>
+    <style>
+        #picture{
+            width: 180px;
+            height: 30px;
+            margin-left: 20px;
+            outline: 0;
+            border: 0;
+            background-color: blue;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>编辑文章</h1>
+    <form action="/update" method="post" enctype="multipart/form-data">
+        <!-- 设置隐藏域，把主键的值带给后台，作为更新的条件 -->
+        <input type="hidden" id="id" name="id" value="">
+        <input type="hidden" id="oldImg" name="oldImg" value="">
+        <p>
+            标题： <input type="text" id="title" name="title" autocomplete="off">
+        </p>
+        <p>
+            封面 <input type="file" name="img" id="cover" style="display: none;" autocomplete="off">
+            <button id="picture"><i class="iconfont icon-shangchuanwenjian" >上传文件</i></button>
+        </p>
+        <p>
+            封面预览：
+            <img src="" alt=""  width="160px" id="img">
+        </p>
+        <p>
+            作者： <input type="text" id="author" name="author" autocomplete="off">
+        </p>
+        <p>
+            审核：
+            <input type="radio" name="status" value='0'> 待审核
+            <input type="radio" name="status" value='1'> 审核通过
+            <input type="radio" name="status" value='2'> 审核失败
+        </p>
+        <p>
+            所属分类：
+            <select name="cat_id" id="cat_id">
+                <option value="0">请选择</option>
+                {{each cats item index}}
+                <option value="{{item.id}}">{{item.name}}</option>
+                {{/each}}
+            </select>
+        </p>
+        <p>
+            内容：
+            <textarea name="content" id="content" cols="30" rows="10"></textarea>
+        </p>
+        <p>
+            <button>确定更新</button>
+        </p>
+    </form>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script>
+    // 编辑文件
+    let Picture = document.getElementById('picture');
+    let Cover = document.getElementById('cover');
+    Picture.onclick = function(event){
+        event.preventDefault();
+        Cover.click();
+    }
+    window.onload = function () {
+        //进行数据回显
+        let titleEle = document.getElementById("title");
+        let idEle = document.getElementById('id')
+        let authorEle = document.getElementById("author");
+        let contentEle = document.getElementById("content");
+        let statusEle = document.getElementsByName('status');
+        let selectEle = document.getElementById('cat_id');
+        let imgEle = document.getElementById('img');
+        let oldImgEle = document.getElementById('oldImg');
+        let options = document.querySelectorAll('#cat_id option');
+        let coverEle = document.getElementById('cover');
+
+        coverEle.onchange = function(){
+            let file = this.files[0];
+            console.log(file)
+            //把二进制file转成base 64 编码
+            let fileReader = new FileReader();
+            fileReader.readAsDataURL(file)
+            fileReader.onload = function(){
+                imgEle.src = this.result;
+                console.log(this.result)
+            }
+
+        }
+        
+        let id = "{{ article.id }}"; // 当前的id
+        let status = "{{article.isverify}}"; // 当前的状态
+        let cat_id = "{{article.cat_id}}"; // 当前的所属分类
+
+        //把伪数组转成真数组，找出含有指定的value的DOM
+        // [...statusEle].find(item => item.value == status).checked = true
+
+        let input = [...statusEle].find(item => item.value == status)
+        input.checked = true;
+
+        selectEle.value = cat_id;
+        idEle.value = id;
+    //    let option =  Array.from(options).find(item=> item.value == cat_id);
+    //     option.selected = true;
+        // console.log(input)
+        titleEle.value = "{{article.title}}";
+        authorEle.value = "{{article.author}}";
+        contentEle.value = "{{article.content}}";
+        oldImgEle.value = "{{article.img}}"
+        //回显预览图片
+        imgEle.src = "{{article.img}}"
+    }
+
+    // // jQuery方式实现
+    // window.onload = function(){
+    //     let id = "{{article.id}}";
+    //     let status = "{{article.isverify}}";
+    //     let cat_id = "{{article.cat_id}}";
+
+    //     let input = [...$("input[name=status]")].find(item => item.value == status)
+    //     input.checked = true;
+    //     // let selectEle = $("#cat_id").val();
+    //     // let idEle = $("#id").val();
+    //     // let titleEle =  $("#title").val();
+    //     // let authorEle =  $("#author").val();
+    //     // let contentEle =  $("#content").val();
+    
+
+    //     $("#title").val("{{article.title}}") ;
+    //     $("#author").val("{{article.author}}");
+
+    //     $("#cat_id").val(cat_id);
+    //     $("#id").val(id)
+    //     $("#content").val("{{article.content}}");
+    // }
+</script>
+
+</html>
