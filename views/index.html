@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_2525456_ezhtmmkiquj.css">
+    <!-- http://127.0.0.1:8000/  等价于  / -->
+
+    <!-- /： 是网站根路径。 自己托管的路径就是我们的网站根路径 -->
+    <link rel="stylesheet" href="/css/xiaomi.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="page flexa">
+            <div class="topbar-nav">
+                {{each topbarNav item index }}
+                <a href="#"> {{ item }}</a>
+                <span>|</span>
+                {{/each}}
+            </div>
+            <div class="topbar-info">
+                {{each topbarInfo item index }}
+                <a href="#">{{ item }}</a>
+                <span>|</span>
+                {{/each}}
+            </div>
+            <div class="topbar-cart">
+                <i class="iconfont icon-gouwuche"></i>
+                {{each topbarCart item index }}
+                <a href="#">{{ item }}</a>
+                {{ /each }}
+            </div>
+        </div>
+    </div>
+    <div class="site-header">
+        <div class="page flexb">
+            <div class="header-logo">
+                <img src="/images/logo-mi2.png" alt="">
+            </div>
+            <div class="header-nav">
+                {{each headerNav item index}}
+               <a href="#">{{ item.name}}</a>
+                {{/each}}
+            </div>
+            <div class="header-search">
+                <input type="text" placeholder="  智能">
+                <div class="search">
+                    <i class="iconfont icon-sousuoxiao"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="home-hero-container">
+        <div class="page">
+            <div class="wrap">
+                <div class="imgwrap">
+                    <img src="/images/11Ultra.jpg" alt="">
+                </div>
+                <div class="site-category">
+                    <ul>
+                        {{each siteCategory item index}}
+                        <li>
+                            <a href="#">{{ item }}</a>
+                            <span>></span>
+                        </li>
+                        {{ /each }}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="home-hero-sub">
+            <div class="page ">
+                <div class="bao flex">
+                    <div class="span4">
+                        <ul>
+                            {{each iconContent item index}}
+                            <li>
+                                <i class="{{item.iconfont}}"></i>
+                                <div>{{ item.name }}</div>
+                            </li>
+                            {{ /each }}
+                        </ul>
+                    </div>
+                    <div class="span16">
+                        <img src="/images/红米9A.jpg" alt="">
+                        <img src="/images/小米11.jpg" alt="">
+                        <img src="/images/小米手表.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page">
+        <div class="home-flashsale">
+            <div class="box-hd">
+                <h2>小米秒杀</h2>
+                <div class="i">
+                    <i class="iconfont icon-dayuhao-copy"></i>
+                    <i class="iconfont icon-dayuhao2"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="flashsale-countdown">
+                    <div class="round">00:00 场</div>
+                    <img src="/images/闪电.png" alt="">
+                    <div class="desc">距离结束还有</div>
+                    <div class="countdown">
+                        <span>02</span>
+                        :
+                        <span>22</span>
+                        :
+                        <span>34</span>
+                    </div>
+                </div>
+                <div class="bose">
+                    <ul>
+                        {{each seckill  item index}}
+                        <li>
+                            <img src="{{ item.picture}}" alt="">
+                            <h3 class="text-ellipsisl1">{{item.title}}</h3>
+                            <p class="a">{{item.smalltitle}}</p>
+                            <p class="b">
+                                <span>{{ item.newPrice}}</span>
+                                <span>{{ item.oldPrice}}</span>
+                            </p>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="note9">
+            <img src="/images/Note9.webp" alt="">
+        </div>
+        <div class="home-brick-box clearfix">
+            <div class="box-hd1 clearfix">
+                <h2>手机</h2>
+                <div class="more">
+                    <a href="#">查看更多
+                        <i class="iconfont icon-right-copy"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row1 clearfix">
+                <div class="span5">
+                    <img src="/images/折叠屏手机.webp" alt="">
+                </div>
+                <div class="span16">
+                    <ul>
+                        {{ each  phone  item index}}
+                        <li>
+                            <img src="{{item.picture}}" alt="">
+                            <h3 class="text-ellipsisl1">{{item.title}}</h3>
+                            <p class="a">{{item.smalltitle}}</p>
+                            <p class="b">
+                                {{item.Price}}
+                            </p>
+                        </li>
+                        {{ /each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="note9">
+            <img src="/images/小米电视特惠.webp" alt="">
+        </div>
+        <div class="home-brick-box clearfix">
+            <div class="box-hd1 clearfix">
+                <h2>家电</h2>
+                <div class="more">
+                    <a href="#">
+                        <span class="a">热门</span>
+                        <span>电视影音</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row1 clearfix">
+                <div class="span6">
+                    <div class="redmi">
+                        <img src="/images/max98.webp" alt="">
+                    </div>
+                    <div class="redmi1">
+                        <img src="/images/60英寸.webp" alt="">
+                    </div>
+                </div>
+                <div class="span16">
+                    <ul>
+                        {{ each appliance item index}}
+                        <li>
+                            <img src="{{item.picture}}" alt="">
+                            <h3 class="text-ellipsisl1">{{item.title}}</h3>
+                            <p class="a">{{item.smalltitle}}</p>
+                            <p class="b">
+                                {{item.Price}}
+                            </p>
+                        </li>
+                        {{ /each}}
+                        <div class="ql">
+                            <div class="R">
+                                <div class="ac">
+                                    <h3>Redmi 智能电视 MAX 98''</h3>
+                                    <p>19999元</p>
+                                </div>
+                                <div class="b">
+                                    <img src="/images/智能电视.webp" alt="">
+                                </div>
+                            </div>
+                            <div class="L">
+                                <div class="x">
+                                    <h3>浏览更多</h3>
+                                    <span>电视影音</span>
+                                </div>
+                                <div class="j">
+                                    <i class="iconfont icon-icon-right-copy-copy"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="note9">
+            <img src="/images/智能门锁.webp" alt="">
+        </div>
+        <div class="home-brick-box clearfix">
+            <div class="box-hd1 clearfix">
+                <h2>智能</h2>
+                <div class="more">
+                    <a href="#">
+                        <span class="a">热门</span>
+                        <span class="b">安防</span>
+                        <span>出行</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row1 clearfix">
+                <div class="span6">
+                    <div class="redmi">
+                        <img src="/images/米家显示器挂灯.webp" alt="">
+                    </div>
+                    <div class="redmi1">
+                        <img src="/images/电动滑板车Pro.webp" alt="">
+                    </div>
+                </div>
+                <div class="span16">
+                    <ul>
+                        {{ each ability item index}}
+                        <li>
+                            <img src="{{item.picture}}" alt="">
+                            <h3 class="text-ellipsisl1">{{item.title}}</h3>
+                            <p class="a">{{item.smalltitle}}</p>
+                            <p class="b">
+                                {{item.Price}}
+                            </p>
+                        </li>
+                        {{ /each}}
+                        <div class="ql">
+                            <div class="R">
+                                <div class="ac">
+                                    <h3>米家空气净化器Pro</h3>
+                                    <p>999元</p>
+                                </div>
+                                <div class="b">
+                                    <img src="/images/米家空气净化器Pro.webp" alt="">
+                                </div>
+                            </div>
+                            <div class="L">
+                                <div class="x">
+                                    <h3>浏览更多</h3>
+                                    <span>热门</span>
+                                </div>
+                                <div class="j">
+                                    <i class="iconfont icon-icon-right-copy-copy"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="note9">
+            <img src="/images/养生壶.webp" alt="">
+        </div>
+        <div class="home-brick-box clearfix">
+            <div class="box-hd1 clearfix">
+                <h2>搭配</h2>
+                <div class="more">
+                    <a href="#">
+                        <span class="a">热门</span>
+                        <span>耳机音箱</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row1 clearfix">
+                <div class="span6">
+                    <div class="redmi">
+                        <img src="/images/九号平衡车.webp" alt="">
+                    </div>
+                    <div class="redmi1">
+                        <img src="/images/米家电动剃须刀S700.webp" alt="">
+                    </div>
+                </div>
+                <div class="span16">
+                    <ul>
+                        {{ each match item index}}
+                        <li>
+                            <img src="{{item.picture}}" alt="">
+                            <h3 class="text-ellipsisl1">{{item.title}}</h3>
+                            <p class="a">{{item.smalltitle}}</p>
+                            <p class="b">
+                                {{item.Price}}
+                            </p>
+                        </li>
+                        {{ /each}}
+                        <div class="ql">
+                            <div class="R">
+                                <div class="ac">
+                                    <h3>小米小爱触屏音箱</h3>
+                                    <p>219元</p>
+                                </div>
+                                <div class="b">
+                                    <img src="/images/小米小爱触屏音箱.webp" alt="">
+                                </div>
+                            </div>
+                            <div class="L">
+                                <div class="x">
+                                    <h3>浏览更多</h3>
+                                    <span>热门</span>
+                                </div>
+                                <div class="j">
+                                    <i class="iconfont icon-icon-right-copy-copy"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="note9">
+            <img src="/images/米家互联网空调.webp" alt="">
+        </div>
+        <div class="home-brick-box clearfix">
+            <div class="box-hd1 clearfix">
+                <h2>配件</h2>
+                <div class="more">
+                    <a href="#">
+                        <span class="a">热门</span>
+                        <span>充电器</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row1 clearfix">
+                <div class="span6">
+                    <div class="redmi">
+                        <img src="/images/米兔儿童电话手表4C.webp" alt="">
+                    </div>
+                    <div class="redmi1">
+                        <img src="/images/米家自动洗手机套装.webp" alt="">
+                    </div>
+                </div>
+                <div class="span16">
+                    <ul>
+                        {{ each ACC item index}}
+                        <li>
+                            <img src="{{item.picture}}" alt="">
+                            <h3 class="text-ellipsisl1">{{item.title}}</h3>
+                            <p class="a">{{item.smalltitle}}</p>
+                            <p class="b">
+                                {{item.Price}}
+                            </p>
+                        </li>
+                        {{ /each}}
+                        <div class="ql">
+                            <div class="R">
+                                <div class="ac">
+                                    <h3>小米二合一数据线100cm</h3>
+                                    <p>24.9元</p>
+                                </div>
+                                <div class="b">
+                                    <img src="/images/小米二合一数据线.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="L">
+                                <div class="x">
+                                    <h3>浏览更多</h3>
+                                    <span>热门</span>
+                                </div>
+                                <div class="j">
+                                    <i class="iconfont icon-icon-right-copy-copy"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="note9">
+            <img src="/images/雷军.webp" alt="">
+        </div>
+        <div class="home-brick-box clearfix">
+            <div class="box-hd1 clearfix">
+                <h2>周边</h2>
+                <div class="more">
+                    <a href="#">
+                        <span class="a">热门</span>
+                        <span>出行</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row1 clearfix">
+                <div class="span6">
+                    <div class="redmi">
+                        <img src="/images/米家保温杯弹盖版.webp" alt="">
+                    </div>
+                    <div class="redmi1">
+                        <img src="/images/小米小背包.webp" alt="">
+                    </div>
+                </div>
+                <div class="span16">
+                    <ul>
+                        {{ each periphery item index}}
+                        <li>
+                            <img src="{{item.picture}}" alt="">
+                            <h3 class="text-ellipsisl1">{{item.title}}</h3>
+                            <p class="a">{{item.smalltitle}}</p>
+                            <p class="b">
+                                {{item.Price}}
+                            </p>
+                        </li>
+                        {{ /each}}
+                        <div class="ql">
+                            <div class="R">
+                                <div class="ac">
+                                    <h3>日常元素抽纸 青春版 24包/箱</h3>
+                                    <p>24.9元</p>
+                                </div>
+                                <div class="b">
+                                    <img src="/images/日常元素抽纸 青春版 24包箱.webp" alt="">
+                                </div>
+                            </div>
+                            <div class="L">
+                                <div class="x">
+                                    <h3>浏览更多</h3>
+                                    <span>热门</span>
+                                </div>
+                                <div class="j">
+                                    <i class="iconfont icon-icon-right-copy-copy"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="note9">
+            <img src="/images/小米巨能写中性笔10支装2.webp" alt="">
+        </div>
+        <div class="home-video-box">
+            <div class="box-hd">
+                <h2>视频</h2>
+                <div class="more">
+                    <a href="#">
+                        查看全部
+                        <i class="iconfont icon-right-copy"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="video">
+                <ul>
+                    {{ each video item index}}
+                    <li>
+                        <img src="{{item.picture}}" alt="">
+                        <p>{{item.title}}</p>
+                        <i class="iconfont icon-bofanganniu dd"></i>
+                    </li>
+                    {{ /each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="size-footer">
+        <div class="page">
+            <div class="footer-service">
+                {{ each service item index}}
+                <a href="#">
+                    <i class="{{ item.iconfont}}"></i>
+                    {{ item.service}}
+                </a>
+                {{ /each}}
+            </div>
+            <hr />
+            <div class="footer-links clearfix">
+                {{ each ReferenceServices item index}}
+                <dl>
+                    <dt>{{item.title}}</dt>
+                    <dd>{{item.name}}</dd>
+                    <dd>{{item.names}}</dd>
+                    <dd>{{item.namess}}</dd>
+                </dl>
+                {{ /each}}
+                <div class="col-contact">
+                    <p class="phone">400-100-5678</p>
+                    <p>8:00-18:00（仅收市话费）</p>
+                    <div class="abc">
+                        <a href="#">
+                            <i class="iconfont icon-liuyan"></i>
+                            人工客服
+                        </a>
+                    </div>
+                    <div class="gz">
+                        <span>关注小米：</span>
+                        <i class="iconfont icon-weibo"></i>
+                        <i class="iconfont icon-weixin"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="site-info clearfix">
+        <div class="page clearfix">
+            <div class="logo fl"></div>
+            <div class="info-text fl">
+                <p class="p">
+                    {{ each feature item index}}
+                    <a href="#">小米商城</a>
+                    <span>|</span>
+                    {{ /each}}
+                    <a href="#">Select Location</a>
+                </p>
+                <p class="p">
+                    {{ each feature1 item index}}
+                    <a href="#">{{item}}</a>
+                    <span>|</span>
+                    {{ /each}}
+                    <a href="#">北京市消费者协会</a>
+                </p>
+                <p>
+                    <a href="#">© mi.com</a>
+                    <span>京ICP证110507号</span>
+                    {{ each feature2 item index}}
+                    <a href="#">{{item}}</a>
+                    {{/each}}
+                </p>
+                <p>
+                    {{each feature3 item index}}
+                    <a href="#">{{item}}</a>
+                    {{/each}}
+                </p>
+                <p>
+                    <a href="#">增值电信业务许可证</a>
+                    <span>网络食品经营备案</span>
+                    <span>京食药网食备202010048</span>
+                    <a href="#">食品经营许可证</a>
+                </p>
+                <p>
+                    <span>违法和不良信息举报电话：171-5104-4404</span>
+                    <a href="#">知识产权侵权投诉</a>
+                    <span>本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</span>
+                </p>
+                <div class="info-links">
+                    {{ each infopicture item index}}
+                    <img src="{{item}}" alt="">
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slogan">让全球每个人都能享受科技带来的美好生活</div>
+    <div class="fixed">
+        {{ each fixed item index}}
+        <a href="#">
+            <i class="{{item.iconfont}}"></i>
+            <div>{{item.name}}</div>
+        </a>
+        {{/each}}
+    </div>
+</body>
+
+</html>
